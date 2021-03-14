@@ -1,0 +1,16 @@
+{
+  "name": "@bdsx/image-maps",
+  "version": "1.0.0",
+  "description": "Render custom images on maps",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Shock95x",
+  "license": "GPLV3",
+  "bdsxPlugin": true,
+  "dependencies": {
+    "jimp": "^0.9.8"
+  },
+  "devDependencies": {
+    "bdsx": "file:../bdsx"
+  }
+}
