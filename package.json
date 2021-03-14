@@ -1,6 +1,6 @@
 {
   "name": "@bdsx/image-maps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Render custom images on maps",
   "main": "index.js",
   "keywords": [],
@@ -9,6 +9,10 @@
   "bdsxPlugin": true,
   "dependencies": {
     "jimp": "^0.9.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shock95x/bdsx-image-maps"
   },
   "devDependencies": {
     "bdsx": "file:../bdsx"

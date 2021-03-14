@@ -2,7 +2,7 @@
 
 Simple [BDSX](https://github.com/bdsx/bdsx) plugin used to render custom images on maps
 
-![PLugin](plugin.gif)
+![PLugin](https://github.com/Shock95x/bdsx-image-maps/blob/main/plugin.gif?raw=true)
 
 
 ## Installation:
