@@ -1,8 +1,7 @@
 import { NativeClass } from "bdsx/nativeclass";
 import { abstract } from "bdsx/common";
-
-import {  LevelStorage } from ".";
-import {ActorUniqueID} from "bdsx/bds/actor";
+import { LevelStorage } from ".";
+import { ActorUniqueID } from "bdsx/bds/actor";
 
 export class MapItemSavedData extends NativeClass {
 

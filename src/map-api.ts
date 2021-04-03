@@ -1,8 +1,9 @@
-import Jimp = require("jimp");
 import { Color } from "./color";
 import { MapItem } from "./map-item";
-import {LevelFunc} from "./level-func";
-import {ItemStack} from "bdsx/bds/inventory";
+import { ItemStack } from "bdsx/bds/inventory";
+import { getLevelStorage } from "./index";
+
+import Jimp = require("jimp");
 
 export class MapApi {
 
@@ -35,7 +36,7 @@ export class MapApi {
             }
         }
         mapData.setLocked();
-        if(save) mapData.save(LevelFunc.getLevelStorage());
+        if(save) mapData.save(getLevelStorage());
         mapData.destruct();
     }
 

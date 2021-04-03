@@ -1,9 +1,9 @@
 export class Color {
 
-    a: number;
     r: number;
     g: number;
     b: number;
+    a: number;
 
     constructor(r: number, g: number, b: number, a: number = 0xff) {
         this.r = r;

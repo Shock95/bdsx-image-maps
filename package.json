@@ -1,6 +1,6 @@
 {
   "name": "@bdsx/image-maps",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Render custom images on maps",
   "main": "index.js",
   "keywords": [],

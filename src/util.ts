@@ -1,5 +1,5 @@
-import {Actor} from "bdsx";
-import {TextPacket} from "bdsx/bds/packets";
+import { Actor } from "bdsx";
+import { TextPacket } from "bdsx/bds/packets";
 
 export function sendMessage(actor: Actor, message: string, type: number = 1) {
     let pk: TextPacket = TextPacket.create();
