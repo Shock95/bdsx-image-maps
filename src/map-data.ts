@@ -6,18 +6,18 @@ import { ActorUniqueID } from "bdsx/bds/actor";
 export class MapItemSavedData extends NativeClass {
 
     setPixel(color: number, x: number, y: number): void {
-        abstract();
+        return abstract();
     }
 
     setLocked(): void {
-        abstract();
+        return abstract();
     }
 
     getMapId(): ActorUniqueID {
-        abstract();
+        return abstract();
     }
 
     save(storage: LevelStorage): void {
-        abstract();
+        return abstract();
     }
 }

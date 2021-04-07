@@ -41,7 +41,6 @@ export class MapApi {
     }
 
     /**
-     *
      * @param itemStack - Map item
      * @param image - URL or path to image
      * @param save

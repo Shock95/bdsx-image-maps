@@ -10,30 +10,33 @@ import { CompoundTag } from "bdsx/bds/nbt";
 const path = require("path");
 const fs = require("fs");
 
+export class LevelStorage extends NativeClass {}
+
 export const IMAGE_PATH = path.join(process.cwd(), '../images');
 if (!fs.existsSync(IMAGE_PATH)) fs.mkdirSync(IMAGE_PATH);
 
-export class LevelStorage extends NativeClass {}
-
 pdb.setOptions(SYMOPT_UNDNAME);
-const hacker = ProcHacker.load(path.join(__dirname, '../pdb.ini'), [
+const procHacker = ProcHacker.load(path.join(__dirname, '../pdb.ini'), [
     "Level::getLevelStorage",
     "MapItemSavedData::setPixel",
     "MapItemSavedData::setLocked",
     "MapItemSavedData::getParentMapId",
-    "MapItemSavedData::save",
-    "?getMapSavedData@Level@@UEAAPEAVMapItemSavedData@@AEBVCompoundTag@@@Z"
+    "MapItemSavedData::save"
 ]);
 pdb.setOptions(0);
+const procHackerDec = ProcHacker.load(path.join(__dirname, '../pdb.ini'), [
+    "?getMapSavedData@Level@@UEAAPEAVMapItemSavedData@@AEBVCompoundTag@@@Z"
+]);
 pdb.close();
 
-MapItemSavedData.prototype.save = hacker.js("MapItemSavedData::save", RawTypeId.Void, {this: MapItemSavedData}, LevelStorage);
-MapItemSavedData.prototype.setPixel = hacker.js("MapItemSavedData::setPixel", RawTypeId.Void, {this: MapItemSavedData}, RawTypeId.Int32, RawTypeId.Int32, RawTypeId.Int32);
-MapItemSavedData.prototype.setLocked = hacker.js("MapItemSavedData::setLocked", RawTypeId.Void, {this: MapItemSavedData});
-MapItemSavedData.prototype.getMapId = hacker.js("MapItemSavedData::getParentMapId", RawTypeId.Bin64, {this: MapItemSavedData});
+MapItemSavedData.prototype.save = procHacker.js("MapItemSavedData::save", RawTypeId.Void, {this: MapItemSavedData}, LevelStorage);
+MapItemSavedData.prototype.setPixel = procHacker.js("MapItemSavedData::setPixel", RawTypeId.Void, {this: MapItemSavedData}, RawTypeId.Int32, RawTypeId.Int32, RawTypeId.Int32);
+MapItemSavedData.prototype.setLocked = procHacker.js("MapItemSavedData::setLocked", RawTypeId.Void, {this: MapItemSavedData});
+MapItemSavedData.prototype.getMapId = procHacker.js("MapItemSavedData::getParentMapId", RawTypeId.Bin64, {this: MapItemSavedData});
 
-export const getMapData = hacker.js("?getMapSavedData@Level@@UEAAPEAVMapItemSavedData@@AEBVCompoundTag@@@Z", MapItemSavedData, null, Level, CompoundTag);
-export const _getLevelStorage = hacker.js("Level::getLevelStorage", LevelStorage, null, Level);
+export const _getLevelStorage = procHacker.js("Level::getLevelStorage", LevelStorage, null, Level);
+export const getMapData = procHackerDec.js("?getMapSavedData@Level@@UEAAPEAVMapItemSavedData@@AEBVCompoundTag@@@Z", MapItemSavedData, null, Level, CompoundTag);
+
 
 export function getLevel(): Level {
     return serverInstance.minecraft.getLevel();
