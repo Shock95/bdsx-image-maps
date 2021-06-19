@@ -1,43 +1,38 @@
 import { command } from "bdsx";
-import { IMAGE_PATH } from "./index";
+import { IMAGE_PATH, sendMessage } from "./index";
 import { MapApi } from "../index";
-import { sendMessage, TextFormat } from "./util";
-import { Player, PlayerPermission } from "bdsx/bds/player";
-import { CommandRawText } from "bdsx/bds/command";
+import { Player } from "bdsx/bds/player";
+import { CommandPermissionLevel, CommandRawText } from "bdsx/bds/command";
 import { CxxString } from "bdsx/nativetype";
 
 const fs = require("fs");
+const path = require("path");
 
-command.register("map", 'Map command').overload((p, origin, output) => {
+command.register("map", "Map command", CommandPermissionLevel.Operator).overload(async(p, origin, output) => {
     const actor = origin.getEntity();
-    if(!(actor instanceof Player)) {
-        return;
-    }
-    if(actor.getPermissionLevel() != PlayerPermission.OPERATOR) {
-        sendMessage(actor, `${TextFormat.RED}You need operator status to run this command!`);
-        return;
-    }
+    if(!(actor instanceof Player)) return;
+
     const item = actor.getMainhandSlot();
-    if(item.getId() !== 418) {
-        sendMessage(actor, `${TextFormat.RED}You must be holding a map in your hand!`);
-        return;
+    if(item.getName() !== "minecraft:filled_map") {
+        return sendMessage(actor, "§cError: You must be holding a Filled Map item in your hand!");
     }
     if(p.param1 == "url") {
         if (p.param2 == undefined) {
-            sendMessage(actor, `${TextFormat.GREEN}URL not specified`);
-            return;
+            return sendMessage(actor, "§cError: URL not specified");
         }
+        sendMessage(actor, "§aSetting map image from URL...");
+
         // @ts-ignore
-        MapApi.setMapImage(item, p.param2.text);
-        sendMessage(actor, `${TextFormat.GREEN}Setting map image from URL...`);
-        return;
+        const result = await MapApi.setMapImage(item, p.param2.text);
+        return sendMessage(actor, result ? "§aImage has been set successfully!" : "§cError: Failed to read image from URL.");
     }
-    const file = IMAGE_PATH + "/" + p.param1;
+    const file = path.join(IMAGE_PATH, p.param1);
     if(!fs.existsSync(file)) {
-        sendMessage(actor, `${TextFormat.RED}Could not find specified file`);
-        return;
+        return sendMessage(actor, `§cError: Could not find file ${p.param1}`);
     }
-    MapApi.setMapImage(item, file);
-    sendMessage(actor, `${TextFormat.GREEN}Setting map image...`);
+    sendMessage(actor, "§aSetting map image...");
+
+    const result = await MapApi.setMapImage(item, file);
+    sendMessage(actor, result ? "§aImage has been set successfully!" : `§cError: Failed to read image ${p.param1}`);
 
 }, { param1: CxxString, param2: [CommandRawText, true]});
