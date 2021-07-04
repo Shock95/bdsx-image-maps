@@ -1,4 +1,3 @@
-import { serverInstance } from "bdsx";
 import { NativeClass } from "bdsx/nativeclass";
 import { ProcHacker } from "bdsx/prochacker";
 import { pdb } from "bdsx/core";
@@ -11,6 +10,7 @@ import { int32_t, void_t } from "bdsx/nativetype";
 import { ActorUniqueID } from "bdsx/bds/actor";
 import { Player } from "bdsx/bds/player";
 import { TextPacket } from "bdsx/bds/packets";
+import { serverInstance } from "bdsx/bds/server";
 
 const path = require("path");
 const fs = require("fs");

@@ -1,8 +1,8 @@
-import { command } from "bdsx";
 import { IMAGE_PATH, sendMessage } from "./index";
 import { MapApi } from "../index";
 import { Player } from "bdsx/bds/player";
 import { CommandPermissionLevel, CommandRawText } from "bdsx/bds/command";
+import { command } from "bdsx/command";
 import { CxxString } from "bdsx/nativetype";
 
 const fs = require("fs");
